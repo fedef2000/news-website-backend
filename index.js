@@ -1,9 +1,8 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000;
-const data = require('./news')
 const cors = require('cors');
-const corsOptions = require('../config/corsOptions');
+const corsOptions = require('./config/corsOptions');
 
 require('./startup/logging');
 require('./startup/routes')(app);
