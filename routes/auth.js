@@ -5,6 +5,10 @@ const {User} = require('../models/user');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const credentials = require('../middleware/credetials')
+
+router.use(credentials)
+
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
