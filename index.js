@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000;
 const data = require('./news')
+const credentials = require('./middleware/credetials')
 
 require('./startup/logging');
 require('./startup/routes')(app);
@@ -9,6 +10,7 @@ require('./startup/db')();
 require('./startup/config')();
 require('./startup/validation')();
 
+app.use(credentials)
 
 app.get('/articoli', (req, res) => {
   res.send(data)
@@ -25,7 +27,3 @@ app.get('/articoli/:id', (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
 })
-
-/*if(process.env.ENV === 'production'){
-  app.use(express.static('./frontend/build'))
-}*/
