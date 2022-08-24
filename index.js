@@ -10,16 +10,7 @@ require('./startup/db')();
 require('./startup/config')();
 require('./startup/validation')();
 
-//app.use(cors(corsOptions));
-
-app.use(cors(), function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://main--stellular-tiramisu-05e0cc.netlify.app"); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+app.use(cors(corsOptions));
 
 app.get('/articoli', (req, res) => {
   res.send(data)
