@@ -5,12 +5,6 @@ const {User} = require('../models/user');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const credentials = require('../middleware/credetials')
-const cors = require('cors');
-const corsOptions = require('../config/corsOptions');
-
-router.use(credentials)
-router.use(cors(corsOptions));
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body); 

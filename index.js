@@ -2,7 +2,10 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000;
 const data = require('./news')
-const credentials = require('./middleware/credetials')
+//const credentials = require('./middleware/credetials')
+const cors = require('cors');
+//const corsOptions = require('../config/corsOptions');
+
 
 require('./startup/logging');
 require('./startup/routes')(app);
@@ -10,7 +13,9 @@ require('./startup/db')();
 require('./startup/config')();
 require('./startup/validation')();
 
-app.use(credentials)
+app.use(cors());
+
+//app.use(credentials)
 
 app.get('/articoli', (req, res) => {
   res.send(data)
