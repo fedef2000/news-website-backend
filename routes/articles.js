@@ -7,6 +7,10 @@ const fs = require('fs')
 const upload = multer();
 const router = express.Router();
 
+const cors = require('cors');
+const corsOptions = require('../config/corsOptions');
+router.use(cors(corsOptions));
+
 
 router.get('/', async (req, res) => {
  // fs.readFile('./images/default.jpg', async (err,data) =>{
