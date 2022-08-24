@@ -26,6 +26,6 @@ app.listen(port, () => {
   console.log(`listening on port ${port}`)
 })
 
-if(process.env.ENV === 'production'){
+/*if(process.env.ENV === 'production'){
   app.use(express.static('./frontend/build'))
-}
+}*/
