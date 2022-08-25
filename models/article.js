@@ -20,9 +20,8 @@ const articleSchema = new mongoose.Schema({
     minlength: 10,
     maxlength: 20000  
   },
-  image: { 
-    data: Buffer, 
-    contentType: String
+  imageURL:{
+    type: String
   },
   date: { type: Date, default: Date.now }
 });
@@ -34,6 +33,7 @@ function validateArticle(article) {
     title: Joi.string().min(5).max(100).required(),
     subtitle: Joi.string().min(5).max(250).required(),
     text: Joi.string().min(10).max(20000).required(),
+    imageURL: Joi.string()
   });
 
   return schema.validate(article)

@@ -2,9 +2,6 @@ const auth = require('../middleware/auth');
 const {Article, validate} = require('../models/article');
 const mongoose = require('mongoose');
 const express = require('express');
-const multer = require('multer');
-const fs = require('fs')
-const upload = multer();
 const router = express.Router();
 
 const cors = require('cors');
@@ -13,39 +10,15 @@ router.use(cors(corsOptions));
 
 
 router.get('/', async (req, res) => {
- // fs.readFile('./images/default.jpg', async (err,data) =>{
   const articles = await Article.find().sort({date:-1}).limit(7);
-  /*
-  const results = articles.map( (a) => {
-    let r = {...a._doc}
-
-    if(!a.image.data){
-        if (err) throw err;
-        r.image.data = data;
-        r.image.contentType = 'image/jpeg'
-        console.log(r)
-        return r
-      }
-      return r
-    })
-    */
-    res.send(articles); //results
-  //})
+  res.send(articles); 
 });
 
-router.post('/', [auth, upload.single('image')], async (req, res) => {
+router.post('/', [auth], async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   let article
-  if(req.file){ //se c'è req.file allora è stata caricata anche l'immagine
-    let image = {
-      data:req.file.buffer,
-      contentType: req.file.mimetype
-    }
-    article = new Article({ title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, image: image, date: req.body.date });
-  }else{ 
-    article = new Article({ title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, date: req.body.date }); //
-  }
+  article = new Article({ title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, date: req.body.date });
   article = await article.save();
   res.send(article);
 });
@@ -54,7 +27,7 @@ router.put('/:id', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  const article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, text: req.body.text, image: req.body.image, date: req.body.date }, {
+  const article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, text: req.body.text, imageURL: req.body.imageURL, date: req.body.date }, {
     new: true
   });
 
