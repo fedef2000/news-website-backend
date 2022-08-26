@@ -2,6 +2,6 @@ const winston = require('winston');
 const mongoose = require('mongoose');
 
 module.exports = function() {
-  mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://fede:MqauvswiRo41IER5@sindaco.uatza.mongodb.net/sindaco?retryWrites=true&w=majority')
+  mongoose.connect(process.env.MONGODB_URI )
     .then(() => console.log('Connected to MongoDB...'));
 }
