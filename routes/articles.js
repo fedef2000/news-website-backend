@@ -18,7 +18,7 @@ router.post('/', [auth], async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   let article
-  article = new Article({ title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, date: req.body.date });
+  article = new Article({ title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag ,date: req.body.date });
   article = await article.save();
   res.send(article);
 });
@@ -27,7 +27,7 @@ router.put('/:id', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  const article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, text: req.body.text, imageURL: req.body.imageURL, date: req.body.date }, {
+  const article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag, date: req.body.date }, {
     new: true
   });
 

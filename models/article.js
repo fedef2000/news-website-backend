@@ -23,6 +23,12 @@ const articleSchema = new mongoose.Schema({
   imageURL:{
     type: String
   },
+  tag:{
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 25  
+  },
   date: { type: Date, default: Date.now }
 });
 
@@ -33,7 +39,8 @@ function validateArticle(article) {
     title: Joi.string().min(5).max(100).required(),
     subtitle: Joi.string().min(5).max(250).required(),
     text: Joi.string().min(10).max(20000).required(),
-    imageURL: Joi.string()
+    imageURL: Joi.string(),
+    tag: Joi.string().min(5).max(25)
   });
 
   return schema.validate(article)
