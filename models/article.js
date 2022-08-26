@@ -26,7 +26,7 @@ const articleSchema = new mongoose.Schema({
   tag:{
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 2,
     maxlength: 25  
   },
   date: { type: Date, default: Date.now }
@@ -40,7 +40,7 @@ function validateArticle(article) {
     subtitle: Joi.string().min(5).max(250).required(),
     text: Joi.string().min(10).max(20000).required(),
     imageURL: Joi.string(),
-    tag: Joi.string().min(5).max(25)
+    tag: Joi.string().min(2).max(25)
   });
 
   return schema.validate(article)
