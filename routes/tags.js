@@ -20,5 +20,15 @@ router.get('/', async (req, res) => {
   res.send(results); 
 });
 
+router.get('/:tag', async (req, res) => {
+  try {
+    const article = await Article.find({tag:req.params.tag});
+    if (!article) return res.status(404).send(`No articles found with this ${req.params.tag} tag`);      
+    res.send(article);
+  } catch (err) {
+    res.status(400).send(err.message)
+  }
+
+});
 
 module.exports = router; 
