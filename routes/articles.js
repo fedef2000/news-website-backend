@@ -10,7 +10,7 @@ router.use(cors(corsOptions));
 
 
 router.get('/', async (req, res) => {
-  const articles = await Article.find().sort({date:-1}).limit(7);
+  const articles = await Article.find().sort({date:-1});
   res.send(articles); 
 });
 
