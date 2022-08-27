@@ -1,9 +1,7 @@
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://stellular-tiramisu-05e0cc.netlify.app/',
-    'https://main--stellular-tiramisu-05e0cc.netlify.app',
-    'https://stellular-tiramisu-05e0cc.netlify.app',
-    'https://sindacodelcalciomercato.netlify.app'
+    'https://sindacodelcalciomercato.netlify.app',
+    'http://www.sindacodelcalciomercato.it'
 ]
 
 module.exports = allowedOrigins
