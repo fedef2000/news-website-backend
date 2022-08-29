@@ -37,14 +37,14 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', [auth], async (req, res) => {
-  if(!req.params.id){
-    res.status(400).send('Id not provided')
+  if(req.params.id){
+    const article = await Article.findByIdAndRemove(req.params.id);
+    
+    if (!article) return res.status(404).send('The article with the given ID was not found.');
+    
+    res.send(article);
   }
-  const article = await Article.findByIdAndRemove(req.params.id);
-
-  if (!article) return res.status(404).send('The article with the given ID was not found.');
-
-  res.send(article);
+  res.status(400).send('Id not provided')
 });
  
 router.get('/:id', async (req, res) => {
