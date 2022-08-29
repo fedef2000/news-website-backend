@@ -3,7 +3,7 @@ const {Article, validate} = require('../models/article');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-var ObjectId = require('mongoose').Types.ObjectId
+let ObjectId = require('mongoose').Types.ObjectId
 
 const cors = require('cors');
 const corsOptions = require('../config/corsOptions');
@@ -25,14 +25,16 @@ router.post('/', [auth], async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
+  if(!ObjectId.isValid(req.params.id)) return res.status(400).send('Id not valid')
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  const article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag, date: req.body.date }, {
+  const article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag, date: req.body.date }, {
     new: true
   });
 
   if (!article) return res.status(404).send('The article with the given ID was not found.');
+  article = await article.save();
   
   res.send(article);
 });
