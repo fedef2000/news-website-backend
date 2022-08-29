@@ -37,6 +37,9 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', [auth], async (req, res) => {
+  if(!req.params.id){
+    res.status(400).send('Id not provided')
+  }
   const article = await Article.findByIdAndRemove(req.params.id);
 
   if (!article) return res.status(404).send('The article with the given ID was not found.');
