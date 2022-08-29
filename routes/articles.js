@@ -45,7 +45,7 @@ router.delete('/:id', [auth], async (req, res) => {
     
     res.send(article);
   }
-  res.status(400).send('Id not provided')
+  res.status(400).send('Id not valid')
 });
  
 router.get('/:id', async (req, res) => {
