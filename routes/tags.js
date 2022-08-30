@@ -9,15 +9,17 @@ router.use(cors(corsOptions));
 
 router.get('/', async (req, res) => {
   const articles = await Article.find().select('tag');
-  let results = []
+  let tags = []
+
   articles.forEach((article) => {
-    if(results.findIndex((e) => { return e === article.tag}) === -1){
-        if(article.tag){
-            results.push(article.tag)
-        }
-    } 
+    article.tag.forEach(t=>{if(t) tags.push(t)})
   })
-  res.send(results); 
+
+  uniqueTags = tags.filter(function(item, pos, self) {
+    return self.indexOf(item) === pos;
+  })
+ 
+  res.send(uniqueTags); 
 });
 
 router.get('/:tag', async (req, res) => {
