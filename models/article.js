@@ -42,7 +42,7 @@ function validateArticle(article) {
     subtitle: Joi.string().min(5).max(250).required(),
     text: Joi.string().min(10).max(20000).required(),
     imageURL: Joi.string(),
-    tag: Joi.array().items(Joi.string().min(2).max(25))
+    tag: Joi.array().items(Joi.string().min(2).max(25).required())
   });
 
   return schema.validate(article)
