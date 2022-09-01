@@ -49,7 +49,7 @@ router.delete('/:id', [auth], async (req, res) => {
 
 router.get('/title/:titleUrl', async (req, res) => {
   try {
-    const article = await Article.find({titleUrl: req.params.titleUrl});
+    const article = await Article.findOne({titleUrl: req.params.titleUrl});
     if (article.length === 0) return res.status(404).send('The article with the given title was not found.');      
     res.send(article);
   } catch (err) {
