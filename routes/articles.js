@@ -19,7 +19,7 @@ router.post('/', [auth], async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   let article
-  article = new Article({ title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag ,date: req.body.date });
+  article = new Article({ title: req.body.title, subtitle: req.body.subtitle,titleUrl: req.body.titleUrl, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag ,date: req.body.date });
   article = await article.save();
   res.send(article);
 });
@@ -29,7 +29,7 @@ router.put('/:id', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  let article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag, date: req.body.date }, {
+  let article = await Article.findByIdAndUpdate(req.params.id, { title: req.body.title, titleUrl: req.body.titleUrl, subtitle: req.body.subtitle, text: req.body.text, imageURL: req.body.imageURL, tag:req.body.tag, date: req.body.date }, {
     new: true
   });
 
@@ -46,7 +46,17 @@ router.delete('/:id', [auth], async (req, res) => {
 
   res.send(article);
 });
- 
+
+router.get('/title/:titleUrl', async (req, res) => {
+  try {
+    const article = await Article.find({titleUrl: req.params.titleUrl});
+    if (article.length === 0) return res.status(404).send('The article with the given title was not found.');      
+    res.send(article);
+  } catch (err) {
+    res.status(400).send(err.message)
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
