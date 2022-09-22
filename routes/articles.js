@@ -61,7 +61,7 @@ router.post('/search', async (req,res) => {
   if(!req.body.string){
     return res.status(400).send("string is required in body request")
   }
-  const articles = await Article.find({ text: { $regex: req.body.string , $options: "i" } })
+  const articles = await Article.find({ text: { $regex: req.body.string , $options: "i" } }).sort({date:-1});
   if(articles.length === 0){
     res.status(404).send("nessun articolo trovato")
   }else{
