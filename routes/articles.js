@@ -57,7 +57,7 @@ router.get('/title/:titleUrl', async (req, res) => {
   }
 });
 
-router.get('/search', async (req,res) => {
+router.post('/search', async (req,res) => {
   if(!req.body.string){
     return res.status(400).send("string is required in body request")
   }
