@@ -57,6 +57,18 @@ router.get('/title/:titleUrl', async (req, res) => {
   }
 });
 
+router.get('/search', async (req,res) => {
+  if(!req.body.string){
+    return res.status(400).send("string is required in body request")
+  }
+  const articles = await Article.find({ text: { $regex: req.body.string , $options: "i" } })
+  if(articles.length === 0){
+    res.status(404).send("nessun articolo trovato")
+  }else{
+    res.send(articles)
+  }
+})
+
 router.get('/:id', async (req, res) => {
   try {
     const article = await Article.findById(req.params.id);
@@ -67,5 +79,7 @@ router.get('/:id', async (req, res) => {
   }
 
 });
+
+
 
 module.exports = router;
